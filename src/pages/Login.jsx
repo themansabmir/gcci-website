@@ -16,7 +16,7 @@ export default function Login({ onNavigate }) {
             animate={{ opacity: 1, y: 0 }}
             className="min-h-screen flex items-center justify-center bg-gray-50 px-4"
         >
-            <div className="w-full max-w-md bg-white rounded-2xl shadow-lg  p-8">
+            <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
                 <h2 className="text-2xl font-bold text-center mb-2">Welcome Back</h2>
                 <p className="text-center text-gray-600 mb-6">Sign in to your GCCI Control Tower.</p>
                 <form className="space-y-4">
