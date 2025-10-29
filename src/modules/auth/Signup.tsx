@@ -2,11 +2,8 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { UserIcon, EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/outline";
 
-interface SignupProps {
-    onNavigate?: (page: string) => void;
-}
 
-export default function Signup({ onNavigate }: SignupProps) {
+export default function Signup() {
 
 
     return (

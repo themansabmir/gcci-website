@@ -2,11 +2,9 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/outline";
 
-interface LoginProps {
-    onNavigate?: (page: string) => void;
-}
 
-export default function Login({ onNavigate }: LoginProps) {
+
+export default function Login() {
    
     return (
         <motion.div
