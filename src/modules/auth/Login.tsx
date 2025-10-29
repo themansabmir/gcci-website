@@ -7,12 +7,7 @@ interface LoginProps {
 }
 
 export default function Login({ onNavigate }: LoginProps) {
-    const handleSignupClick = () => {
-        if (onNavigate) {
-            onNavigate("signup");
-        }
-    };
-
+   
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}

@@ -7,11 +7,7 @@ interface SignupProps {
 }
 
 export default function Signup({ onNavigate }: SignupProps) {
-    const handleLoginClick = () => {
-        if (onNavigate) {
-            onNavigate("login");
-        }
-    };
+
 
     return (
         <motion.div
