@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { UserIcon, EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/outline";
-import React from "react";
 
-export default function Signup({ onNavigate }) {
+interface SignupProps {
+    onNavigate?: (page: string) => void;
+}
+
+export default function Signup({ onNavigate }: SignupProps) {
     const handleLoginClick = () => {
         if (onNavigate) {
             onNavigate("login");
@@ -58,7 +61,7 @@ export default function Signup({ onNavigate }) {
                                 type="password"
                                 required
                                 placeholder="••••••••"
-                                minLength="8"
+                                minLength={8}
                                 className="appearance-none block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             />
                         </div>
@@ -91,7 +94,6 @@ export default function Signup({ onNavigate }) {
                     Already have an account?{" "}
                     <Link
                         to="/login"
-                        onClick={() => setOpen(false)}
                         className="text-indigo-600 font-medium hover:text-indigo-500 transition-colors"
                     >
                         Login

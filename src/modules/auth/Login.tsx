@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/outline";
-import React from "react";
 
-export default function Login({ onNavigate }) {
+interface LoginProps {
+    onNavigate?: (page: string) => void;
+}
+
+export default function Login({ onNavigate }: LoginProps) {
     const handleSignupClick = () => {
         if (onNavigate) {
             onNavigate("signup");
@@ -66,7 +69,6 @@ export default function Login({ onNavigate }) {
                     Don't have an account?{" "}
                     <Link
                         to="/signup"
-                        onClick={() => setOpen(false)}
                         className="text-indigo-600 font-medium hover:text-indigo-500 transition-colors"
                     >
                         Sign Up
