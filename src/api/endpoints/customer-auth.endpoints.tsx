@@ -14,6 +14,7 @@ export type CustomerLoginPayload = {
 
 export type CustomerSignupPayload = CustomerLoginPayload & {
   name: string;
+  
 };
 
 export class CustomerAuthHttpService {
