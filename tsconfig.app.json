@@ -6,20 +6,12 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-    "baseUrl": "src",
+    "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@api/*": [
-        "api/*" // Maps import @api/config to src/api/config
-      ],
-      "@modules/*": [
-        "modules/*" // Maps import @modules/auth/index.types to src/modules/auth/index.types
-      ],
-      "@shared/*": [
-        "shared/*" // Maps import @shared/components to src/shared/components
-      ]
+      "@/*": ["./src/*"],
+      "@api/*": ["./src/api/*"],
+      "@modules/*": ["./src/modules/*"],
+      "@shared/*": ["./src/shared/*"]
     },
 
     /* Bundler mode */
