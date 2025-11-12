@@ -1,98 +1,147 @@
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { UserIcon, EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/outline";
-
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { motion } from "framer-motion"
+import { Link } from "react-router-dom"
+import { useCustomerSignupApi } from "./hooks/useCustomerAuthApi"
+import {
+  Form, FormControl, FormField, FormItem, FormLabel, FormMessage
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Button } from "@/components/ui/button"
+import { customerSignupSchema, CustomerSignupFormValues } from "./index.types"
 
 export default function Signup() {
+  const form = useForm<CustomerSignupFormValues>({
+    resolver: zodResolver(customerSignupSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      companyName: "",
+      terms: false,
+    },
+  })
 
+  const { signup, isLoading, isError, error } = useCustomerSignupApi()
 
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="min-h-screen flex items-center justify-center bg-gray-50 px-4"
-        >
-            <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
-                <h2 className="text-2xl font-bold text-center mb-2">Create Account</h2>
-                <p className="text-center text-gray-600 mb-6">Start managing your global supply chain today.</p>
-                <form className="space-y-4">
-                    <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                        <div className="relative rounded-lg shadow-sm">
-                            <UserIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                            <input
-                                id="name"
-                                name="name"
-                                type="text"
-                                required
-                                placeholder="John Doe"
-                                className="appearance-none block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Work Email</label>
-                        <div className="relative rounded-lg shadow-sm">
-                            <EnvelopeIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                            <input
-                                id="email"
-                                name="email"
-                                type="email"
-                                required
-                                placeholder="work@company.com"
-                                className="appearance-none block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                        <div className="relative rounded-lg shadow-sm">
-                            <LockClosedIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                required
-                                placeholder="••••••••"
-                                minLength={8}
-                                className="appearance-none block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            />
-                        </div>
-                    </div>
-                    <div className="flex items-start">
-                        <div className="flex items-center h-5">
-                            <input
-                                id="terms"
-                                name="terms"
-                                type="checkbox"
-                                required
-                                className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-                            />
-                        </div>
-                        <div className="ml-3 text-sm">
-                            <label htmlFor="terms" className="font-medium text-gray-700">
-                                I agree to the{" "}
-                                <a href="#" className="text-indigo-600 hover:text-indigo-500">Terms of Service</a>
-                            </label>
-                        </div>
-                    </div>
-                    <button
-                        type="submit"
-                        className="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition"
-                    >
-                        Create Account
-                    </button>
-                </form>
-                <p className="text-center text-gray-500 mt-4">
-                    Already have an account?{" "}
-                    <Link
-                        to="/login"
-                        className="text-indigo-600 font-medium hover:text-indigo-500 transition-colors"
-                    >
-                        Login
-                    </Link>
-                </p>
-            </div>
-        </motion.div>
-    );
+  const onSubmit = (values: CustomerSignupFormValues) => {
+    signup(values)
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="min-h-screen flex items-center justify-center bg-gray-50 px-4"
+    >
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+        <h2 className="text-2xl font-bold text-center mb-2">Create Account</h2>
+        <p className="text-center text-gray-600 mb-6">
+          Start managing your global supply chain today.
+        </p>
+
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Full Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="John Doe" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email Address</FormLabel>
+                  <FormControl>
+                    <Input placeholder="work@company.com" type="email" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="companyName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Company Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your Company Ltd." {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input type="password" placeholder="••••••••" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="terms"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                  <FormControl>
+                    <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                  </FormControl>
+                  <FormLabel className="font-normal">
+                    I agree to the{" "}
+                    <a href="#" className="text-indigo-600 hover:text-indigo-500">
+                      Terms of Service
+                    </a>
+                  </FormLabel>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {isError && (
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                {error?.message || "Registration failed. Please try again."}
+              </div>
+            )}
+
+            <Button
+              type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700 text-white transition"
+              disabled={isLoading}>
+              {isLoading ? "Creating Account..." : "Create Account"}
+            </Button>
+          </form>
+        </Form>
+
+        <p className="text-center text-gray-500 mt-4">
+          Already have an account?{" "}
+          <Link
+            to="/login"
+            className="text-indigo-600 font-medium hover:text-indigo-500 transition-colors"
+          >
+            Login
+          </Link>
+        </p>
+      </div>
+    </motion.div>
+  )
 }
