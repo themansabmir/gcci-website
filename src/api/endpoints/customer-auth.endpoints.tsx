@@ -1,38 +1,117 @@
+import { api } from "@api/config";
 
-import { api } from '@api/config';
-import { ICustomer } from '@modules/auth/index.types'; 
-
-export type CustomerApiResponse<T> = {
-  message: string;
-  response: T;
+// Types based on backend DTOs
+export type SignupPayload = {
+  // Organization details
+  organizationName: string;
+  city: string;
+  address: string;
+  state: string;
+  country: string;
+  pin_code: string;
+  mobile_number: string;
+  gst_number: string;
+  pan_number: string;
+  // Admin customer details
+  email: string;
+  password: string;
+  name?: string;
 };
 
-export type CustomerLoginPayload = {
+export type LoginPayload = {
   email: string;
   password: string;
 };
 
-export type CustomerSignupPayload = CustomerLoginPayload & {
-  name: string;
-  companyName: string;
+export type ForgotPasswordPayload = {
+  email: string;
+};
+
+export type ResetPasswordPayload = {
+  token: string;
+  newPassword: string;
+};
+
+export type ConfirmAccountPayload = {
+  token: string;
+};
+
+export type InviteCustomerPayload = {
+  email: string;
+  role?: "admin" | "customer";
+};
+
+// Response types
+export type SignupResponse = {
+  message: string;
+  organizationId: string;
+  customerId: string;
+  vendorId: string;
+  vendorExists: boolean;
+};
+
+export type LoginResponse = {
+  message: string;
+  token: string;
+  customer: {
+    id: string;
+    email: string;
+    name?: string;
+    role: string;
+    organizationId: string;
+  };
+};
+
+export type MessageResponse = {
+  message: string;
 };
 
 export class CustomerAuthHttpService {
-  static async login(loginPayload: CustomerLoginPayload) {
-    const {
-      data: { response: customer, message },
-    } = await api.post<CustomerApiResponse<ICustomer>>('/customer/login', loginPayload);
-    
-  
-    return { customer, message };
+  /**
+   * Signup - Register organization and admin customer
+   */
+  static async signup(payload: SignupPayload): Promise<SignupResponse> {
+    const { data } = await api.post<SignupResponse>("/customer", payload);
+    return data;
   }
 
+  /**
+   * Login - Authenticate customer
+   */
+  static async login(payload: LoginPayload): Promise<LoginResponse> {
+    const { data } = await api.post<LoginResponse>("/customer/login", payload);
+    return data;
+  }
 
-  static async signup(signupPayload: CustomerSignupPayload) {
-    const {
-      data: { response: customer, message },
-    } = await api.post<CustomerApiResponse<ICustomer>>('/customer/signup', signupPayload);
-    
-    return { customer, message };
+  /**
+   * Forgot Password - Send password reset email
+   */
+  static async forgotPassword(payload: ForgotPasswordPayload): Promise<MessageResponse> {
+    const { data } = await api.post<MessageResponse>("/customer/forgot-password", payload);
+    return data;
+  }
+
+  /**
+   * Reset Password - Reset password with token
+   */
+  static async resetPassword(payload: ResetPasswordPayload): Promise<MessageResponse> {
+    const { data } = await api.post<MessageResponse>("/customer/reset-password", payload);
+    return data;
+  }
+
+  /**
+   * Confirm Account - Verify email address
+   */
+  static async confirmAccount(payload: ConfirmAccountPayload): Promise<MessageResponse> {
+    const { data } = await api.post<MessageResponse>("/customer/confirm-account", payload);
+    return data;
+  }
+
+  /**
+   * Invite Customer - Invite new customer to organization (requires auth)
+   */
+  static async inviteCustomer(payload: InviteCustomerPayload): Promise<MessageResponse> {
+    const { data } = await api.post<MessageResponse>("/customer/invite", payload);
+    return data;
   }
 }
