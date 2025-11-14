@@ -18,24 +18,18 @@ const envEnum = {
 type EnvKey = keyof typeof envEnum;
 
 function getBaseUrl(): string {
-
   if (!env || !(env in envEnum)) {
-    throw new Error(
-      `[getBaseUrl] Invalid VITE_NODE_ENV: '${env}'. Must be one of: ${Object.keys(
-        envEnum
-      ).join(", ")}`
-    );
+    throw new Error(`[getBaseUrl] Invalid VITE_NODE_ENV: '${env}'. Must be one of: ${Object.keys(envEnum).join(", ")}`);
   }
 
   return envEnum[env as EnvKey];
 }
 
 const base_url = getBaseUrl();
+console.log(base_url);
 
 export const constants = {
-    TOKEN: "token",
-    BASE_URL: base_url,
-    ACTIVE_ENV: env
+  TOKEN: "token",
+  BASE_URL: base_url,
+  ACTIVE_ENV: env,
 };
-
-
