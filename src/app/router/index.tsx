@@ -3,6 +3,7 @@ import MainLayout from "@/app/layout/MainLayout";
 import LandingPage from "../../modules/website";
 import Login from "../../modules/auth/Login";
 import Signup from "../../modules/auth/Signup";
+import TeamPage from "@modules/team/TeamPage.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ export const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />,
+      },
+      {
+        path: "team",
+        element: <TeamPage />,
       },
       {
         path: "signup",
