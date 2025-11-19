@@ -3,6 +3,7 @@ import MainLayout from "@/app/layout/MainLayout";
 import LandingPage from "../../modules/website";
 import Login from "../../modules/auth/Login";
 import Signup from "../../modules/auth/Signup";
+import { InviteMember } from "../../modules/team/InviteMember";
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ export const router = createBrowserRouter([
       {
         path: "signup",
         element: <Signup />,
+      },
+      {
+        path: "team/invite",
+        element: <InviteMember asPage />,
       },
     ],
   },
