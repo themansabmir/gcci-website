@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useCallback, useEffect } from "react";
-import { CustomerAuthHttpService, LoginPayload, SignupPayload, LoginResponse } from "@api/endpoints/customer-auth.endpoints";
+import { CustomerAuthHttpService, LoginPayload, SignupPayload } from "@api/endpoints/customer-auth.endpoints";
 import { toast } from "sonner";
 
 type Customer = {
@@ -51,7 +51,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = useCallback(async (payload: LoginPayload) => {
     try {
       setIsLoading(true);
-      const response: LoginResponse = await CustomerAuthHttpService.login(payload);
+      const { response, message } = await CustomerAuthHttpService.login(payload);
 
       // Store token and customer data
       localStorage.setItem(TOKEN_KEY, response.token);
@@ -60,7 +60,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setToken(response.token);
       setCustomer(response.customer);
 
-      toast.success(response.message || "Login successful");
+      toast.success(message || "Login successful");
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Invalid credentials");
       throw error;
