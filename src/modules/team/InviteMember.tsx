@@ -9,10 +9,9 @@ import { CustomerAuthHttpService } from "@api/endpoints/customer-auth.endpoints"
 
 export function InviteMember({ asPage = false }: { asPage?: boolean }) {
   const { customer } = useAuth();
-  console.log(customer);
   const [email, setEmail] = useState("");
   const [role, setRole] = useState<"admin" | "customer">("customer");
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {

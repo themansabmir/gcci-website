@@ -95,8 +95,8 @@ export function Navigation() {
               <Link to="/signup">Sign Up</Link>
             </Button>
             {customer?.role === "admin" && (
-              <Button className="bg-white text-[#141c2c] hover:bg-white/90" asChild>
-                <Link to="/team/invite">Invite Team</Link>
+              <Button variant="ghost" className="text-white hover:text-white/80 hover:bg-white/10" asChild>
+                <Link to="/team">Team</Link>
               </Button>
             )}
           </div>
@@ -131,8 +131,8 @@ export function Navigation() {
                     <Link to="/signup">Sign Up</Link>
                   </Button>
                   {customer?.role === "admin" && (
-                    <Button className="w-full bg-white text-[#141c2c] hover:bg-white/90" asChild>
-                      <Link to="/team/invite">Invite Team</Link>
+                    <Button variant="outline" className="w-full border-white/20 text-white hover:bg-white/10" asChild>
+                      <Link to="/team">Team</Link>
                     </Button>
                   )}
                 </div>

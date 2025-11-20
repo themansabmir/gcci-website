@@ -69,6 +69,22 @@ export type LoginResponse = {
 
 export type MessageResponse = Record<string, never>;
 
+export type TeamMember = {
+  id: string;
+  email: string;
+  name?: string;
+  role: "admin" | "customer";
+  status?: "active" | "invited";
+};
+
+export type TeamListResponse = {
+  members: TeamMember[];
+};
+
+export type UpdateRolePayload = {
+  role: "admin" | "customer";
+};
+
 export class CustomerAuthHttpService {
   /**
    * Signup - Register organization and admin customer
@@ -116,5 +132,25 @@ export class CustomerAuthHttpService {
   static async inviteCustomer(payload: InviteCustomerPayload): Promise<ApiResponse<MessageResponse>> {
     const { data } = await api.post<ApiResponse<MessageResponse>>("/customer/invite", payload);
     return data;
+  }
+}
+
+export class TeamHttpService {
+  static async listMembers(): Promise<TeamMember[]> {
+    const { data } = await api.get<TeamListResponse | TeamMember[] | { data: TeamMember[] }>("/customer/members");
+    // Support a few possible response shapes
+    if (Array.isArray(data)) return data;
+    // @ts-expect-error dynamic shape
+    if (Array.isArray(data?.data)) return data.data as TeamMember[];
+    // @ts-expect-error dynamic shape
+    return (data?.members as TeamMember[]) || [];
+  }
+
+  static async updateRole(customerId: string, payload: UpdateRolePayload): Promise<void> {
+    await api.patch(`/customer/members/${customerId}/role`, payload);
+  }
+
+  static async removeMember(customerId: string): Promise<void> {
+    await api.delete(`/customer/members/${customerId}`);
   }
 }

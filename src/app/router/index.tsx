@@ -7,6 +7,7 @@ import ResetPassword from "../../modules/auth/ResetPassword";
 import ConfirmAccount from "../../modules/auth/ConfirmAccount";
 import ForgotPassword from "../../modules/auth/ForgotPassword";
 import { InviteMember } from "../../modules/team/InviteMember";
+import TeamPage from "@modules/team/TeamPage.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ export const router = createBrowserRouter([
       {
         path: "forgot-password",
         element: <ForgotPassword />,
+      },
+      {
+        path: "team",
+        element: <TeamPage />,
       },
       {
         path: "signup",
