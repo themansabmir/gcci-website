@@ -11,12 +11,9 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@modules/auth/context";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -42,6 +39,7 @@ const components: { title: string; href: string; description: string }[] = [
 ];
 
 export function Navigation() {
+  const { customer } = useAuth();
   return (
     <header className="sticky top-0 z-50 w-full border-b  bg-[#141c2c]">
       <div className="container flex h-16 items-center">
@@ -55,26 +53,16 @@ export function Navigation() {
           <NavigationMenuList>
             <NavigationMenuItem>
               <Link to="/">
-                <NavigationMenuLink
-                  className={`${navigationMenuTriggerStyle()} text-white hover:text-white/80`}
-                >
-                  Home
-                </NavigationMenuLink>
+                <NavigationMenuLink className={`${navigationMenuTriggerStyle()} text-white hover:text-white/80`}>Home</NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
 
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="text-white hover:text-white/80">
-                Solutions
-              </NavigationMenuTrigger>
+              <NavigationMenuTrigger className="text-white hover:text-white/80">Solutions</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                   {components.map((component) => (
-                    <ListItem
-                      key={component.title}
-                      title={component.title}
-                      href={component.href}
-                    >
+                    <ListItem key={component.title} title={component.title} href={component.href}>
                       {component.description}
                     </ListItem>
                   ))}
@@ -84,21 +72,13 @@ export function Navigation() {
 
             <NavigationMenuItem>
               <Link to="/#platform">
-                <NavigationMenuLink
-                  className={`${navigationMenuTriggerStyle()} text-white hover:text-white/80`}
-                >
-                  Platform
-                </NavigationMenuLink>
+                <NavigationMenuLink className={`${navigationMenuTriggerStyle()} text-white hover:text-white/80`}>Platform</NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
 
             <NavigationMenuItem>
               <Link to="/#contact">
-                <NavigationMenuLink
-                  className={`${navigationMenuTriggerStyle()} text-white hover:text-white/80`}
-                >
-                  Contact
-                </NavigationMenuLink>
+                <NavigationMenuLink className={`${navigationMenuTriggerStyle()} text-white hover:text-white/80`}>Contact</NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
           </NavigationMenuList>
@@ -108,76 +88,53 @@ export function Navigation() {
         <div className="ml-auto flex items-center space-x-4">
           {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center space-x-2">
-            <Button
-              variant="ghost"
-              className="text-white hover:text-white/80 hover:bg-white/10"
-              asChild
-            >
+            <Button variant="ghost" className="text-white hover:text-white/80 hover:bg-white/10" asChild>
               <Link to="/login">Login</Link>
             </Button>
-            <Button
-              className="bg-white text-[#141c2c] hover:bg-white/90"
-              asChild
-            >
+            <Button className="bg-white text-[#141c2c] hover:bg-white/90" asChild>
               <Link to="/signup">Sign Up</Link>
             </Button>
+            {customer?.role === "admin" && (
+              <Button variant="ghost" className="text-white hover:text-white/80 hover:bg-white/10" asChild>
+                <Link to="/team">Team</Link>
+              </Button>
+            )}
           </div>
 
           {/* Mobile Menu */}
           <Sheet>
             <SheetTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="md:hidden text-white hover:text-white/80 hover:bg-white/10"
-              >
+              <Button variant="ghost" size="icon" className="md:hidden text-white hover:text-white/80 hover:bg-white/10">
                 <Menu className="h-5 w-5" />
                 <span className="sr-only">Toggle menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent
-              side="right"
-              className="bg-[#141c2c] text-white border-l-white/20"
-            >
+            <SheetContent side="right" className="bg-[#141c2c] text-white border-l-white/20">
               <div className="grid gap-4 py-4">
-                <Link
-                  to="/"
-                  className="block px-2 py-1 text-lg text-white hover:text-white/80"
-                >
+                <Link to="/" className="block px-2 py-1 text-lg text-white hover:text-white/80">
                   Home
                 </Link>
-                <Link
-                  to="/#solutions"
-                  className="block px-2 py-1 text-lg text-white hover:text-white/80"
-                >
+                <Link to="/#solutions" className="block px-2 py-1 text-lg text-white hover:text-white/80">
                   Solutions
                 </Link>
-                <Link
-                  to="/#platform"
-                  className="block px-2 py-1 text-lg text-white hover:text-white/80"
-                >
+                <Link to="/#platform" className="block px-2 py-1 text-lg text-white hover:text-white/80">
                   Platform
                 </Link>
-                <Link
-                  to="/#contact"
-                  className="block px-2 py-1 text-lg text-white hover:text-white/80"
-                >
+                <Link to="/#contact" className="block px-2 py-1 text-lg text-white hover:text-white/80">
                   Contact
                 </Link>
                 <div className="border-t border-white/20 pt-4 space-y-2">
-                  <Button
-                    variant="outline"
-                    className="w-full border-white/20 text-white hover:bg-white/10"
-                    asChild
-                  >
+                  <Button variant="outline" className="w-full border-white/20 text-white hover:bg-white/10" asChild>
                     <Link to="/login">Login</Link>
                   </Button>
-                  <Button
-                    className="w-full bg-white text-[#141c2c] hover:bg-white/90"
-                    asChild
-                  >
+                  <Button className="w-full bg-white text-[#141c2c] hover:bg-white/90" asChild>
                     <Link to="/signup">Sign Up</Link>
                   </Button>
+                  {customer?.role === "admin" && (
+                    <Button variant="outline" className="w-full border-white/20 text-white hover:bg-white/10" asChild>
+                      <Link to="/team">Team</Link>
+                    </Button>
+                  )}
                 </div>
               </div>
             </SheetContent>
@@ -188,10 +145,7 @@ export function Navigation() {
   );
 }
 
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
+const ListItem = React.forwardRef<React.ElementRef<"a">, React.ComponentPropsWithoutRef<"a">>(({ className, title, children, ...props }, ref) => {
   return (
     <li>
       <NavigationMenuLink asChild>
@@ -204,9 +158,7 @@ const ListItem = React.forwardRef<
           {...props}
         >
           <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{children}</p>
         </a>
       </NavigationMenuLink>
     </li>
