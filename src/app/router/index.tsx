@@ -3,6 +3,9 @@ import MainLayout from "@/app/layout/MainLayout";
 import LandingPage from "../../modules/website";
 import Login from "../../modules/auth/Login";
 import Signup from "../../modules/auth/Signup";
+import ResetPassword from "../../modules/auth/ResetPassword";
+import ConfirmAccount from "../../modules/auth/ConfirmAccount";
+import ForgotPassword from "../../modules/auth/ForgotPassword";
 
 export const router = createBrowserRouter([
   {
@@ -18,8 +21,20 @@ export const router = createBrowserRouter([
         element: <Login />,
       },
       {
+        path: "forgot-password",
+        element: <ForgotPassword />,
+      },
+      {
         path: "signup",
         element: <Signup />,
+      },
+      {
+        path: "reset-password",
+        element: <ResetPassword />,
+      },
+      {
+        path: "confirm-account",
+        element: <ConfirmAccount />,
       },
     ],
   },
