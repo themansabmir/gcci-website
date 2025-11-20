@@ -6,6 +6,7 @@ import Signup from "../../modules/auth/Signup";
 import ResetPassword from "../../modules/auth/ResetPassword";
 import ConfirmAccount from "../../modules/auth/ConfirmAccount";
 import ForgotPassword from "../../modules/auth/ForgotPassword";
+import { InviteMember } from "../../modules/team/InviteMember";
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
       {
         path: "confirm-account",
         element: <ConfirmAccount />,
+      },
+      {
+        path: "team/invite",
+        element: <InviteMember asPage />,
       },
     ],
   },
