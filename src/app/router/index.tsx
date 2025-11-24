@@ -6,9 +6,11 @@ import Signup from "../../modules/auth/Signup";
 import ResetPassword from "../../modules/auth/ResetPassword";
 import ConfirmAccount from "../../modules/auth/ConfirmAccount";
 import ForgotPassword from "../../modules/auth/ForgotPassword";
+import CustomerProfile from "../../modules/auth/CustomerProfile";
 import { InviteMember } from "../../modules/team/InviteMember";
 import TeamPage from "@modules/team/TeamPage.tsx";
-
+import QuotationTable from "@/modules/quotation/QuotationTable";
+import QuotationDetail from "@/modules/quotation/QuotationDetail";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -43,8 +45,20 @@ export const router = createBrowserRouter([
         element: <ConfirmAccount />,
       },
       {
+        path: "profile",
+        element: <CustomerProfile />,
+      },
+      {
         path: "team/invite",
         element: <InviteMember asPage />,
+      },
+      {
+        path: "quotations",
+        element: <QuotationTable />,
+      },
+      {
+        path: "quotations/:id",
+        element: <QuotationDetail />,
       },
     ],
   },
