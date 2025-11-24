@@ -41,6 +41,18 @@ export type InviteCustomerPayload = {
   role?: "admin" | "customer";
 };
 
+export type CustomerProfile = {
+  id: string;
+  email: string;
+  name?: string;
+  role: string;
+  organizationId: string;
+};
+
+export type UpdateCustomerProfilePayload = {
+  name?: string;
+};
+
 // Generic API response wrapper to match backend successResponse shape
 // { message: string; response: T }
 export type ApiResponse<T> = {
@@ -99,6 +111,22 @@ export class CustomerAuthHttpService {
    */
   static async login(payload: LoginPayload): Promise<ApiResponse<LoginResponse>> {
     const { data } = await api.post<ApiResponse<LoginResponse>>("/customer/login", payload);
+    return data;
+  }
+
+  /**
+   * Get current customer profile
+   */
+  static async getProfile(): Promise<ApiResponse<CustomerProfile>> {
+    const { data } = await api.get<ApiResponse<CustomerProfile>>("/customer/profile");
+    return data;
+  }
+
+  /**
+   * Update current customer profile
+   */
+  static async updateProfile(payload: UpdateCustomerProfilePayload): Promise<ApiResponse<CustomerProfile>> {
+    const { data } = await api.patch<ApiResponse<CustomerProfile>>("/customer/profile", payload);
     return data;
   }
 

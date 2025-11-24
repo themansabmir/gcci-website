@@ -6,6 +6,7 @@ import Signup from "../../modules/auth/Signup";
 import ResetPassword from "../../modules/auth/ResetPassword";
 import ConfirmAccount from "../../modules/auth/ConfirmAccount";
 import ForgotPassword from "../../modules/auth/ForgotPassword";
+import CustomerProfile from "../../modules/auth/CustomerProfile";
 import { InviteMember } from "../../modules/team/InviteMember";
 import TeamPage from "@modules/team/TeamPage.tsx";
 
@@ -41,6 +42,10 @@ export const router = createBrowserRouter([
       {
         path: "confirm-account",
         element: <ConfirmAccount />,
+      },
+      {
+        path: "profile",
+        element: <CustomerProfile />,
       },
       {
         path: "team/invite",

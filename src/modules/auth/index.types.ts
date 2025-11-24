@@ -28,9 +28,14 @@ export const resetPasswordSchema = z
     path: ["confirmPassword"],
   });
 
+export const customerProfileSchema = z.object({
+  name: z.string().min(2, { message: "Full Name is required." }),
+});
+
 export type LoginPayload = z.infer<typeof loginSchema>;
 export type CustomerSignupFormValues = z.infer<typeof customerSignupSchema>;
 export type ResetPasswordFormValues = z.infer<typeof resetPasswordSchema>;
+export type CustomerProfileFormValues = z.infer<typeof customerProfileSchema>;
 
 export interface ICustomer {
   id: string;
